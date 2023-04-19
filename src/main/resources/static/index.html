@@ -30,14 +30,14 @@ background-color: white;
 <h1>Crime Records Management System</h1>
 
 <div class="container-lg">
-<div class="container-sm">
+<!--  div class="container-sm">
 
-<form action="index/state" method="post">
+<form action="index/state" method="get">
 <input type="text" class="form-control" placeholder="Enter State" th:text = ${criminals.state}>
 <br>
-<button type="submit" class="btn btn-warning">Search</button>
+<button type="submit"  name="index/state" value=""class="btn btn-warning">Search</button>
 <br>
-</div>
+</div>-->
 
 
 
@@ -52,16 +52,16 @@ background-color: white;
     </tr>
   </thead>
   <tbody>
-    <tr th:each= "criminals : ${criminals}">
-      <th scope="row"  th:text="${criminals.id}"></th>
-      <td th:text="${criminals.firstName}"></td>
-      <td th:text="${criminals.lastName}"></td>
-      <td th:text="${criminals.offence}"></td>
-      <td th:text="${criminals.sentence}"></td>
+    <tr th:each= "criminal : ${criminals}">
+      <th scope="row"  th:text="${criminal.id}"></th>
+      <td th:text="${criminal.firstName}"></td>
+      <td th:text="${criminal.lastName}"></td>
+      <td th:text="${criminal.offence}"></td>
+      <td th:text="${criminal.sentence}"></td>
     </tr>
   </tbody>
 </table>
-</form>
+
 <!--<a href="/register">register page</a>-->
 <a href="/login">Admin login</a>
 

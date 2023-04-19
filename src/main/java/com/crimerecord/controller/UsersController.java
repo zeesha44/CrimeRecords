@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.crimerecord.Service.UsersService;
 import com.crimerecord.model.Users;
@@ -39,6 +41,18 @@ public class UsersController {
 		model.addAttribute("loginRequest", new Users());
 		return "login_page";
 	}
+	@GetMapping("/edituser")
+	public String getEditPage(Model model) {
+		model.addAttribute("editRequest", new Users());
+		return "edit_users";
+	}
+	
+//	@RequestMapping("/edituser")
+//	@ResponseBody
+//	public String editUser() {
+//		return "edit_users";
+//	}
+	
 	
 	@PostMapping("/register")
 	public String register(@ModelAttribute Users usersModel) {

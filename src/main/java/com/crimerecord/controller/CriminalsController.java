@@ -1,24 +1,24 @@
 package com.crimerecord.controller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
-import com.crimerecord.Service.CriminalsService;
 import com.crimerecord.model.Criminals;
+import com.crimerecord.model.Users;
 import com.crimerecord.repository.CriminalsRepository;
 
 
-@RestController
+@Controller
 //@RequestMapping("/login")
 public class CriminalsController {
 
@@ -27,19 +27,46 @@ public class CriminalsController {
 	
 	//@Autowired
 	//CriminalsService criminalsService;
+	@GetMapping("/saveCriminals")
+	public String getSaveCriminalsPage(Model model) {
+		model.addAttribute("registerRequest", new Criminals());
+		return "register_criminals";
+	}
 	
-	@PostMapping("/login/saveCriminals")
+	@RequestMapping("/saveCriminals")
+	@ResponseBody
 	public ResponseEntity<String> saveCriminals(@RequestBody List<Criminals> criminalsData){
 		criminalsRepository.saveAll(criminalsData);
-		//return "saveCriminals";
+		//return "register_criminals";
 		return ResponseEntity.ok("saved");	
 		
 	}
-	@GetMapping("/index/state")
-	public ResponseEntity<List<Criminals>> getCriminalsByState(@RequestParam String state){
-		return new ResponseEntity<List<Criminals>>(criminalsRepository.findByState(state), HttpStatus.OK);
-		
+	@GetMapping("/index")
+	//@ResponseBody
+	public ModelAndView criminals(){
+		//return criminalsRepository.findByState(state);
+		ModelAndView mv = new ModelAndView("index");
+		//List<Criminals> criminal = criminalsRepository.findAll();
+		mv.addObject("criminals", criminalsRepository.findAll());
+		return mv;
 	}
+	
+	@GetMapping("/editcriminals")
+	public String getEditPage(Model model) {
+		model.addAttribute("editRequest", new Users());
+		return "edit_criminals";
+	}
+	@RequestMapping("/editcriminals")
+	@ResponseBody
+	public String editCriminal() {
+		return "edit_criminals";
+	}
+	
+//	@GetMapping("/index/state")
+//	public ResponseEntity<List<Criminals>> getCriminalsByState(@RequestParam String state){
+//		return new ResponseEntity<List<Criminals>>(criminalsRepository.findByState(state), HttpStatus.OK);
+//		
+//	}
 	
 //	@GetMapping("/index")
 //	public String getCriminals(Model model) {
