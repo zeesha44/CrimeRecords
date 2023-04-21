@@ -1,5 +1,8 @@
 package com.crimerecord.controller;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,11 +14,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.crimerecord.Service.UsersService;
+import com.crimerecord.exception.RecordNotFoundException;
+import com.crimerecord.model.Criminals;
 import com.crimerecord.model.Users;
 import com.crimerecord.repository.UsersRepository;
+
 
 
 
@@ -57,7 +64,7 @@ public class UsersController {
 	@PostMapping("/register")
 	public String register(@ModelAttribute Users usersModel) {
 		System.out.println("register request: " + usersModel);
-		Users registeredUser = usersService.registerUsers(usersModel.getEmail(), usersModel.getPassword());
+		Users registeredUser = usersService.registerUsers(usersModel.getEmail(), usersModel.getPassword(), usersModel.getFirstName(), usersModel.getLastName(), usersModel.getUserType());
 		return registeredUser == null ? "error_page" : "dashboard";
 	}
 	
@@ -66,13 +73,54 @@ public class UsersController {
 		System.out.println("register request: " + usersModel);
 		Users authenticated = usersService.authenticate(usersModel.getEmail(), usersModel.getPassword());
 		if(authenticated != null) {
-			model.addAttribute("userEmail", authenticated.getEmail());
+			model.addAttribute("email", authenticated.getEmail());
 			return "dashboard";
 		}
 		else {
-			return "dashboard";
+			return "error_page";
 		}
 	}
+	
+	@GetMapping("/editusers")
+	//@ResponseBody
+	public String ListUsers(Model model) {
+			List<Users> users = usersService.findAllUsers();
+			model.addAttribute("users", users);
+		return "edit_users";
+	}
+	
+	@RequestMapping(path = {"/edit", "/edit{id}"})
+	public String editUsersById(Model model, @PathVariable("id") Optional<Integer>id) throws RecordNotFoundException{
+		System.out.println("editUsersById" + id);
+		if(id.isPresent()) {
+			Users user = usersService.getUserById(id.get());
+			model.addAttribute("user", user);
+		}
+		else {
+			model.addAttribute("user", new Users());
+		}
+		return "edit_users";
+	}
+	@RequestMapping(path = "/editU", method = RequestMethod.POST)
+	public String UpdateUsers(Users users) 
+	{
+		System.out.println("createOrUpdateEmployee ");
+		
+		usersService.UpdateUser(users);
+		
+		return "redirect:/";
+	}
+	@RequestMapping(path = "/delete/{id}")
+	public String deleteUsersById(Model model, @PathVariable("id") int id) 
+							throws RecordNotFoundException 
+	{
+		
+		System.out.println("deleteUsersById" + id);
+		
+		usersService.deleteUser(id);
+		return "edit_users";
+	}
+	
 	
 //	@GetMapping("/users/{id}")
 //	  Users one(@PathVariable Long id) {

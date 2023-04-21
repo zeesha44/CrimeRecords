@@ -29,11 +29,41 @@ background-color: white;
 <body>
 <h1>Crime Records Management System</h1>
 
+<div class="container-lg">
+<div class="container-sm">
+
+ <form th:action="@{/search}" method="get">
+<input type="search" name="state" class="form-control" placeholder="Enter State" th:value = ${state}>
+<br>
+<button type="submit"  value="search_results" class="btn btn-warning">Search</button>
+<br>
+</div>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">Crime</th>
+      <th scope="col">Punishment Period</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:each= "criminals : ${criminals}">
+      <th scope="row"  th:text="${criminals.id}"></th>
+      <td th:text="${criminals.firstName}"></td>
+      <td th:text="${criminals.lastName}"></td>
+      <td th:text="${criminals.offence}"></td>
+      <td th:text="${criminals.sentence}"></td>
+    </tr>
+  </tbody>
+</table>
 
 
-<!--<a href="/register">register page</a>-->
-<button><a href="/login">Admin login</a></button>
+</form>
 
+</div>
 
 
 

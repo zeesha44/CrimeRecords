@@ -272,38 +272,37 @@
     <!--Body Start-->
     
     <div class="body-container">
-   
-   <table class="table table-hover">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">First Name</th>
-      <th scope="col">Last Name</th>
-      <th scope="col">Email</th>
-      <th scope="col">User Type</th>
-      <th scope="col">Edit</th>
-      <th scope="col">Delete</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr th:each= "users : ${users}">
-      <th scope="row"  th:text="${users.id}"></th>
-      <td th:text="${users.firstName}"></td>
-      <td th:text="${users.lastName}"></td>
-      <td th:text="${users.email}"></td>
-      <td th:text="${users.userType}"></td>
-      <td>
-      <a th:href="@{/edit/{id}(id=${users.id})}" class="btn btn-warning">
-      Edit</i></a>
-      </td>
-      <td>
-      <a th:href="@{/delete/{id}(id=${users.id})}"class="btn btn-danger">Delete</i></a>
-      </td>
-    </tr>
-  </tbody>
-</table>
-</table>
-
+      <div class="main-heading text-center text-uppercase">
+    <form class="login-form" method = "post" action = "@{/editU}" th:object="${users}">
+    <div class="row">
+  <div class="col">
+  <label>First Name</label>
+    <input type="text" class="form-control" th:field="*{firstName}" name = "firstName" aria-label="First name">
+  </div>
+  <div class="col">
+  <label>Last Name</label>
+    <input type="text" class="form-control" th:field="*{lastName}"  name = "lastName" aria-label="Last name">
+  </div>
+</div>
+<br>
+<div class="col-md-6">
+    <input type="email" class="form-control" name="email"  id="inputEmail4" th:field="*{email}">
+  </div>
+  <br>
+  <div class="col-md-6">
+    <input type="password" class="form-control" name="password" id="inputPassword4" placeholder="Password">
+  </div>
+  <br>
+  <select class="form-select" name="userType" aria-label="Default select example">
+  <option selected>User Type</option>
+  <option value="admin" name="userType">Admin</option>
+  <option value="police" name="userType">Police</option>
+  <option value="lawyer" name="userType">Laywer</option>
+</select>
+<br>
+ <button class="btn btn-success" name="edit" value="Submit">Submit</button>
+    </form>
+  </div>
 </div>
 <script src="https://kit.fontawesome.com/f3a86acd25.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

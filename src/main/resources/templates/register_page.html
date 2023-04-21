@@ -232,7 +232,11 @@
       <div class="sidenav-container">
 
     <div class="sidenav">
-
+<div class="side-link">
+            <a href="/dashboard">Dashboard</a>
+            <div></div>
+        </div>
+        
         <div class="side-link">
             <a href="/register">Add Users</a>
             <div></div>
@@ -244,12 +248,12 @@
         </div>
 
         <div class="side-link">
-            <a href="#">Edit Users</a>
+            <a href="/editusers">Edit Users</a>
             <div></div>
         </div>
 
         <div class="side-link">
-            <a href="#">Edit Criminals</a>
+            <a href="/editcriminals">Edit Criminals</a>
             <div></div>
         </div>
 
@@ -287,9 +291,9 @@
   <br>
   <select class="form-select" name="userType" aria-label="Default select example">
   <option selected>User Type</option>
-  <option value="1">Admin</option>
-  <option value="2">Police</option>
-  <option value="3">Lawyer</option>
+  <option value="admin" name="userType">Admin</option>
+  <option value="police" name="userType">Police</option>
+  <option value="lawyer" name="userType">Laywer</option>
 </select>
 <br>
  <button class="btn btn-success" name="register" value="register">Submit</button>
